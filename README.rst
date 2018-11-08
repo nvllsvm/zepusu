@@ -1,6 +1,8 @@
 zepusu
 ======
 
+|Version| |CI|
+
 A minimalist ZeroMQ pub-sub command line client.
 
 Features:
@@ -9,6 +11,14 @@ Features:
 * Subscribe to all messages or filter by one or more topics.
 * Exits after receiving a single message or subscribed indefinitely.
 * Built with scripting in mind.
+
+
+Installation
+------------
+
+.. code::
+
+    $ pip install zepusu
 
 
 Example
@@ -53,3 +63,10 @@ Usage
       -h, --help  show this help message and exit
       --version   show program's version number and exit
       -p PORT
+
+
+.. |Version| image:: https://img.shields.io/pypi/v/zepusu.svg?
+   :target: https://pypi.org/project/zepusu/
+
+.. |CI| image:: https://gitlab.com/nvllsvm/zepusu/badges/master/pipeline.svg?
+   :target: https://gitlab.com/nvllsvm/zepusu/pipelines
