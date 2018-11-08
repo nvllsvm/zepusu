@@ -14,5 +14,11 @@ setuptools.setup(
     entry_points={
         'console_scripts': ['zepusu=zepusu:main']
     },
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7'
+    ],
     python_requires='>=3.6'
 )
