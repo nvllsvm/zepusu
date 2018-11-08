@@ -1,6 +1,5 @@
 import setuptools
 
-
 setuptools.setup(
     name='zepusu',
     author='Andrew Rabert',
@@ -13,14 +12,11 @@ setuptools.setup(
     install_requires=['pyzmq'],
     setup_requires=['setuptools_scm'],
     use_scm_version=True,
-    entry_points={
-        'console_scripts': ['zepusu=zepusu:main']
-    },
+    entry_points={'console_scripts': ['zepusu=zepusu:main']},
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7'
     ],
-    python_requires='>=3.6'
-)
+    python_requires='>=3.6')

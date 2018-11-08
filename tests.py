@@ -5,19 +5,14 @@ WAIT_TIMEOUT = 3
 
 
 class CLITests(unittest.TestCase):
-
     def test_single_message(self):
-        subscriber = subprocess.Popen(
-            ['zepusu', 'sub'],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
+        subscriber = subprocess.Popen(['zepusu', 'sub'],
+                                      stdout=subprocess.PIPE,
+                                      stderr=subprocess.PIPE)
 
-        publish = subprocess.Popen(
-            ['zepusu', 'pub', 'hello', 'world'],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
-        )
+        publish = subprocess.Popen(['zepusu', 'pub', 'hello', 'world'],
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
         publish.wait(WAIT_TIMEOUT)
         self.assertEqual(0, publish.returncode)
         self.assertEqual(b'', publish.stdout.read())

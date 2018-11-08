@@ -11,7 +11,6 @@ try:
 except pkg_resources.DistributionNotFound:
     __version__ = 'unknown'
 
-
 signal.signal(signal.SIGINT, lambda *_: sys.exit(1))
 
 
@@ -64,8 +63,7 @@ def _create_wait():
 
 def main():
     parser = argparse.ArgumentParser(
-        description='ZeroMQ pub-sub command line client'
-    )
+        description='ZeroMQ pub-sub command line client')
     parser.set_defaults(mode=None)
     parser.add_argument('--version', action='version', version=__version__)
     parser.add_argument('-p', dest='port', type=int, default=5556)
@@ -74,21 +72,18 @@ def main():
 
     sp_pub = sp.add_parser('pub', description='Publish')
     sp_pub.set_defaults(mode='pub')
-    sp_pub.add_argument(
-        'payload', nargs='*',
-        help='Message to publish'
-    )
+    sp_pub.add_argument('payload', nargs='*', help='Message to publish')
 
     sp_sub = sp.add_parser('sub', description='Subscribe')
     sp_sub.set_defaults(mode='sub')
     sp_sub.add_argument(
-        '-t', dest='topic', action='append',
-        help='Filter by topic'
-    )
+        '-t', dest='topic', action='append', help='Filter by topic')
     sp_sub.add_argument(
-        '-f', dest='follow', action='store_const', const=True,
-        help='Subscribe until process exists'
-    )
+        '-f',
+        dest='follow',
+        action='store_const',
+        const=True,
+        help='Subscribe until process exists')
 
     args = parser.parse_args()
 
