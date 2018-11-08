@@ -7,7 +7,7 @@ Features:
 
 * Publish messages to 0 through ∞ subscribers.
 * Subscribe to all messages or filter by one or more topics.
-* Exits after receiving a single message (configurable).
+* Exits after receiving a single message or subscribed indefinitely.
 * Built with scripting in mind.
 
 
