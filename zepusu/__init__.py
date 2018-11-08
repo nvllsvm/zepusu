@@ -15,22 +15,27 @@ except pkg_resources.DistributionNotFound:
 signal.signal(signal.SIGINT, lambda *_: sys.exit(1))
 
 
-def _start_subscriber(port, topics):
+def _subscribe(port, topics):
     context = zmq.Context()
     socket = context.socket(zmq.SUB)
     socket.connect(f'tcp://localhost:{port}')
+    # Nothing will be received otherwise
+    if topics is None:
+        topics = ['']
     for topic in topics:
         socket.setsockopt(zmq.SUBSCRIBE, topic.encode())
     _create_wait()
-    return socket
+    while True:
+        yield socket.recv()
 
 
-def _start_publisher(port):
+def _publish(port, messages):
     context = zmq.Context()
     socket = context.socket(zmq.XPUB)
     socket.bind(f'tcp://*:{port}')
     _create_wait()
-    return socket
+    for message in messages:
+        socket.send(message.encode())
 
 
 def _create_wait():
@@ -41,17 +46,6 @@ def _create_wait():
     Publishing and subscribing often fails with values lower than 0.25 seconds
     """
     time.sleep(0.25)
-
-
-def _publish(socket, data):
-    data = data.encode()
-    socket.send(data)
-
-
-def _receive(socket):
-    data = socket.recv()
-    print(data.decode())
-    return data
 
 
 def main():
@@ -76,17 +70,14 @@ def main():
     args = parser.parse_args()
 
     if args.mode == 'pub':
-        payload = ' '.join(args.payload)
-        server = _start_publisher(args.port)
-        _publish(server, payload)
+        _publish(args.port, [' '.join(args.payload)])
     elif args.mode == 'sub':
-        topics = args.topic or ['']
-        socket = _start_subscriber(args.port, topics)
+        messages = _subscribe(args.port, args.topic)
         if args.follow:
-            while True:
-                _receive(socket)
+            for message in messages:
+                print(message.decode())
         else:
-            _receive(socket)
+            print(next(messages).decode())
     else:
         parser.print_help()
 
