@@ -13,5 +13,6 @@ setuptools.setup(
     use_scm_version=True,
     entry_points={
         'console_scripts': ['zepusu=zepusu:main']
-    }
+    },
+    python_requires='>=3.6'
 )
