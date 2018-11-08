@@ -6,8 +6,9 @@ image: python:alpine
 lint:
   stage: test
   script:
-    - pip install flake8
+    - pip install flake8 yapf
     - flake8
+    - yapf -rd .
     - apk add git
     - python setup.py check
 
