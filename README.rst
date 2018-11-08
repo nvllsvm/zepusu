@@ -69,4 +69,4 @@ Usage
    :target: https://pypi.org/project/zepusu/
 
 .. |CI| image:: https://gitlab.com/nvllsvm/zepusu/badges/master/pipeline.svg?
-   :target: https://gitlab.com/nvllsvm/zepusu/pipelines
+   :target: https://gitlab.com/nvllsvm/zepusu/commits/master
