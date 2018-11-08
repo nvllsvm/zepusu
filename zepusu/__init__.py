@@ -15,34 +15,34 @@ except pkg_resources.DistributionNotFound:
 signal.signal(signal.SIGINT, lambda a, b: sys.exit(1))
 
 
-def start_subscriber(port, topics):
+def _start_subscriber(port, topics):
     context = zmq.Context()
     socket = context.socket(zmq.SUB)
     socket.connect(f'tcp://localhost:{port}')
     for topic in topics:
         socket.setsockopt(zmq.SUBSCRIBE, topic.encode())
-    wait()
+    _wait()
     return socket
 
 
-def start_publisher(port):
+def _start_publisher(port):
     context = zmq.Context()
     socket = context.socket(zmq.XPUB)
     socket.bind(f'tcp://*:{port}')
-    wait()
+    _wait()
     return socket
 
 
-def wait():
+def _wait():
     time.sleep(0.25)
 
 
-def publish(socket, data):
+def _publish(socket, data):
     data = data.encode()
     socket.send(data)
 
 
-def receive(socket):
+def _receive(socket):
     data = socket.recv()
     print(data.decode())
     return data
@@ -71,16 +71,16 @@ def main():
 
     if args.mode == 'pub':
         payload = ' '.join(args.payload)
-        server = start_publisher(args.port)
-        publish(server, payload)
+        server = _start_publisher(args.port)
+        _publish(server, payload)
     elif args.mode == 'sub':
         topics = args.topic or ['']
-        socket = start_subscriber(args.port, topics)
+        socket = _start_subscriber(args.port, topics)
         if args.follow:
             while True:
-                receive(socket)
+                _receive(socket)
         else:
-            receive(socket)
+            _receive(socket)
     else:
         parser.print_help()
 
