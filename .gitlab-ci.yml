@@ -26,4 +26,5 @@ upload:
     - apk add git
     - python setup.py check
     - python setup.py bdist_wheel sdist
+    - pip install twine
     - twine upload dist/*
