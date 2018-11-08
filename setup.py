@@ -7,6 +7,8 @@ setuptools.setup(
     author_email='ar@nullsum.net',
     url='https://gitlab.com/nvllsvm/zepusu',
     license='MIT',
+    description='A minimalist ZeroMQ pub-sub command line client.',
+    long_description=open('README.rst').read(),
     packages=['zepusu'],
     install_requires=['pyzmq'],
     setup_requires=['setuptools_scm'],
