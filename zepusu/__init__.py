@@ -21,7 +21,7 @@ def _start_subscriber(port, topics):
     socket.connect(f'tcp://localhost:{port}')
     for topic in topics:
         socket.setsockopt(zmq.SUBSCRIBE, topic.encode())
-    _wait()
+    _create_wait()
     return socket
 
 
@@ -29,11 +29,17 @@ def _start_publisher(port):
     context = zmq.Context()
     socket = context.socket(zmq.XPUB)
     socket.bind(f'tcp://*:{port}')
-    _wait()
+    _create_wait()
     return socket
 
 
-def _wait():
+def _create_wait():
+    # TODO: should REQ/REP be used too?
+    """
+    Wait before returning a socket back for use.
+
+    Publishing and subscribing often fails with values lower than 0.25 seconds
+    """
     time.sleep(0.25)
 
 
