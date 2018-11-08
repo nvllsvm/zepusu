@@ -6,7 +6,11 @@ import time
 import pkg_resources
 import zmq
 
-__version__ = pkg_resources.get_distribution('zepusu').version
+try:
+    __version__ = pkg_resources.get_distribution('zepusu').version
+except pkg_resources.DistributionNotFound:
+    __version__ = 'unknown'
+
 
 signal.signal(signal.SIGINT, lambda a, b: sys.exit(1))
 
@@ -46,7 +50,7 @@ def receive(socket):
 
 def main():
     parser = argparse.ArgumentParser(
-        description='ZeroMQ command line interface'
+        description='ZeroMQ pub-sub command line client'
     )
     parser.set_defaults(mode=None)
     parser.add_argument('--version', action='version', version=__version__)
