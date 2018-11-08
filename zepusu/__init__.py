@@ -12,7 +12,7 @@ except pkg_resources.DistributionNotFound:
     __version__ = 'unknown'
 
 
-signal.signal(signal.SIGINT, lambda a, b: sys.exit(1))
+signal.signal(signal.SIGINT, lambda *_: sys.exit(1))
 
 
 def _start_subscriber(port, topics):
