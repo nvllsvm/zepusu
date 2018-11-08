@@ -49,7 +49,7 @@ def _publish(port, messages):
     socket.bind(f'tcp://*:{port}')
     _create_wait()
     for message in messages:
-        socket.send(message.encode())
+        socket.send(message)
 
 
 def _create_wait():
@@ -84,7 +84,7 @@ def main():
     args = parser.parse_args()
 
     if args.mode == 'pub':
-        _publish(args.port, [' '.join(args.payload)])
+        _publish(args.port, [' '.join(args.payload).encode()])
     elif args.mode == 'sub':
         messages = _subscribe(args.port, args.topic)
         if args.follow:
