@@ -6,3 +6,5 @@ test:
   script:
     - apk add git
     - python setup.py check
+    - pip install flake8
+    - flake8
