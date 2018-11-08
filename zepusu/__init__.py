@@ -68,18 +68,27 @@ def main():
     )
     parser.set_defaults(mode=None)
     parser.add_argument('--version', action='version', version=__version__)
-    parser.add_argument('-p', '--port', type=int, default=5556)
+    parser.add_argument('-p', dest='port', type=int, default=5556)
 
     sp = parser.add_subparsers()
 
     sp_pub = sp.add_parser('pub', description='Publish')
     sp_pub.set_defaults(mode='pub')
-    sp_pub.add_argument('payload', nargs='*')
+    sp_pub.add_argument(
+        'payload', nargs='*',
+        help='Message to publish'
+    )
 
     sp_sub = sp.add_parser('sub', description='Subscribe')
     sp_sub.set_defaults(mode='sub')
-    sp_sub.add_argument('-t', '--topic', action='append')
-    sp_sub.add_argument('-f', '--follow', action='store_const', const=True)
+    sp_sub.add_argument(
+        '-t', dest='topic', action='append',
+        help='Filter by topic'
+    )
+    sp_sub.add_argument(
+        '-f', dest='follow', action='store_const', const=True,
+        help='Subscribe until process exists'
+    )
 
     args = parser.parse_args()
 
