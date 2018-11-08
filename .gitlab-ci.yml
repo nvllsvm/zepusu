@@ -1,10 +1,29 @@
 stages:
   - test
+  - upload
+
+image: python:alpine
+
+lint:
+  stage: test
+  script:
+    - pip install flake8
+    - flake8
 
 test:
-  image: python:alpine
+  stage: test
+  script:
+    - apk add git g++
+    - pip install .
+    - python setup.py test
+
+upload:
+  stage: upload
+  only:
+    - tags
+  environment: pypi
   script:
     - apk add git
     - python setup.py check
-    - pip install flake8
-    - flake8
+    - python setup.py bdist_wheel sdist
+    - twine upload dist/*
