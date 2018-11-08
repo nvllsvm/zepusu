@@ -8,6 +8,7 @@ lint:
   script:
     - pip install flake8
     - flake8
+    - apk add git
     - python setup.py check
 
 test:
