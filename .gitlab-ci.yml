@@ -1,0 +1,8 @@
+stages:
+  - test
+
+test:
+  image: python:alpine
+  script:
+    - apk add git
+    - python setup.py check
