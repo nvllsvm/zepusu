@@ -16,6 +16,14 @@ signal.signal(signal.SIGINT, lambda *_: sys.exit(1))
 
 
 def _subscribe(port, topics):
+    """
+    Return a generator which subscribes to and yields from a queue
+
+    :param int port: local port
+    :param iterable or None topics: topics to subscribe to. None for all
+
+    :rtype: generator yielding bytes
+    """
     context = zmq.Context()
     socket = context.socket(zmq.SUB)
     socket.connect(f'tcp://localhost:{port}')
@@ -30,6 +38,12 @@ def _subscribe(port, topics):
 
 
 def _publish(port, messages):
+    """
+    Publish messages to a queue
+
+    :param int port: local port
+    :param iterable of bytes messages: messages to publish
+    """
     context = zmq.Context()
     socket = context.socket(zmq.XPUB)
     socket.bind(f'tcp://*:{port}')
