@@ -2,4 +2,5 @@
 *.pyc
 .eggs/
 __pycache__/
+build/
 dist/
