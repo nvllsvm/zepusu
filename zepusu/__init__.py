@@ -1,6 +1,8 @@
 import argparse
+import pathlib
 import signal
 import sys
+import tempfile
 import time
 
 import pkg_resources
@@ -14,7 +16,7 @@ except pkg_resources.DistributionNotFound:
 signal.signal(signal.SIGINT, lambda *_: sys.exit(1))
 
 
-def _subscribe(port, topics):
+def _subscribe(socket_path, topics):
     """
     Return a generator which subscribes to and yields from a queue
 
@@ -25,7 +27,7 @@ def _subscribe(port, topics):
     """
     context = zmq.Context()
     socket = context.socket(zmq.SUB)
-    socket.connect(f'tcp://localhost:{port}')
+    socket.connect(f'ipc://{socket_path}')
     # Nothing will be received otherwise
     if topics is None:
         topics = ['']
@@ -36,7 +38,7 @@ def _subscribe(port, topics):
         yield socket.recv()
 
 
-def _publish(port, messages):
+def _publish(socket_path, messages):
     """
     Publish messages to a queue
 
@@ -45,7 +47,7 @@ def _publish(port, messages):
     """
     context = zmq.Context()
     socket = context.socket(zmq.XPUB)
-    socket.bind(f'tcp://*:{port}')
+    socket.bind(f'ipc://{socket_path}')
     _create_wait()
     for message in messages:
         socket.send(message)
@@ -66,7 +68,8 @@ def main():
         description='ZeroMQ pub-sub command line client')
     parser.set_defaults(mode=None)
     parser.add_argument('--version', action='version', version=__version__)
-    parser.add_argument('-p', dest='port', type=int, default=5556)
+    parser.add_argument(
+        '-n', dest='name', default='zepusu', help='Socket name')
 
     sp = parser.add_subparsers()
 
@@ -87,10 +90,13 @@ def main():
 
     args = parser.parse_args()
 
+    socket_path = pathlib.Path(tempfile.gettempdir(), f'zepusu_{args.name}')
+    socket_path = str(socket_path.absolute())
+
     if args.mode == 'pub':
-        _publish(args.port, [' '.join(args.payload).encode()])
+        _publish(socket_path, [' '.join(args.payload).encode()])
     elif args.mode == 'sub':
-        messages = _subscribe(args.port, args.topic)
+        messages = _subscribe(socket_path, args.topic)
         if args.follow:
             for message in messages:
                 print(message.decode())
