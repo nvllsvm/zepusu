@@ -9,7 +9,7 @@ Features:
 
 * Publish messages.
 * Subscribe to all messages or filter by one or more topics.
-* Exits after receiving a single message or subscribed indefinitely.
+* Exit after receiving a single message or consume indefinitely.
 * Built with scripting in mind.
 
 
@@ -33,7 +33,7 @@ Begin by starting a subscriber in follow mode.
 
 Publish a few messages.
 
-.. code::
+.. code::k
 
     $ zepusu pub hello world
     $ zepusu pub greetings galaxy
