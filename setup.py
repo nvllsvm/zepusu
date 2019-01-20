@@ -1,4 +1,9 @@
+import pathlib
+
 import setuptools
+
+REPO = pathlib.Path(__file__).parent
+
 
 setuptools.setup(
     name='zepusu',
@@ -7,7 +12,7 @@ setuptools.setup(
     url='https://gitlab.com/nvllsvm/zepusu',
     license='MIT',
     description='A minimalist ZeroMQ pub-sub command line client.',
-    long_description=open('README.rst').read(),
+    long_description=REPO.joinpath('README.rst').read_text(),
     packages=['zepusu'],
     install_requires=['pyzmq'],
     setup_requires=['setuptools_scm'],
