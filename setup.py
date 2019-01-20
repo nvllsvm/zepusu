@@ -13,7 +13,7 @@ setuptools.setup(
     license='MIT',
     description='A minimalist ZeroMQ pub-sub command line client.',
     long_description=REPO.joinpath('README.rst').read_text(),
-    packages=['zepusu'],
+    py_modules=['zepusu'],
     install_requires=['pyzmq'],
     setup_requires=['setuptools_scm'],
     use_scm_version=True,
