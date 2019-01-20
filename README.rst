@@ -7,7 +7,7 @@ A minimalist ZeroMQ pub-sub command line client.
 
 Features:
 
-* Publish messages to 0 through ∞ subscribers.
+* Publish messages.
 * Subscribe to all messages or filter by one or more topics.
 * Exits after receiving a single message or subscribed indefinitely.
 * Built with scripting in mind.
