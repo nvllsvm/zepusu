@@ -4,7 +4,6 @@ import setuptools
 
 REPO = pathlib.Path(__file__).parent
 
-
 setuptools.setup(
     name='zepusu',
     author='Andrew Rabert',
