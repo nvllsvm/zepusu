@@ -15,5 +15,5 @@ test:
   stage: test
   script:
     - apk add g++ linux-headers
-    - pip install . pytest
+    - pip install '.[test]'
     - pytest

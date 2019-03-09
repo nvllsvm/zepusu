@@ -15,6 +15,9 @@ setuptools.setup(
     long_description=REPO.joinpath('README.rst').read_text(),
     py_modules=['zepusu'],
     install_requires=['pyzmq'],
+    extras_require={
+        'test': ['pytest']
+    },
     entry_points={'console_scripts': ['zepusu=zepusu:main']},
     classifiers=[
         'Development Status :: 3 - Alpha',
